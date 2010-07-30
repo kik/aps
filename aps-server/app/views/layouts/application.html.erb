@@ -1,0 +1,11 @@
+<html>
+<head>
+<title>anarchy proof - <%=h @title %></title>
+<%= stylesheet_link_tag "site.css" %>
+</head>
+
+<body>
+<%= yield %>
+<%= link_to h("return top"), :controller => "problem", :action => "welcome" %>
+</body>
+</html>

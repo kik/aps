@@ -1,0 +1,30 @@
+<h1><%=h @title %></h1>
+<h2>Submit</h2>
+<p>
+<% form_for :answer, :url => { :action => 'prove' }, :html => {:multipart => true} do |f| %>
+Your name: <%= f.text_field 'user' %><br/>
+File: <%= f.file_field 'file_in' %><br/>
+Language: <%= f.select 'language_id', Language.all.map {|x| [x.name, x.id]} %><br/>
+<%= f.hidden_field 'problem_id' %>
+<%= submit_tag 'submit' %><br/>
+<% end %>
+<h2>Problem</h2>
+<p>
+<% @problem.description.each do |line| %>
+<%=h line %><br/>
+<% end %>
+</p>
+<h2>Options</h2> 
+<h2>Verifier</h2> 
+<pre>
+<% @problem.verifier.each do |line| %>
+<%=h line %><br/>
+<% end %>
+</pre>
+<h2>Assumption</h2>
+<pre>
+<% @problem.assumption.each do |line| %>
+<%=h line %><br/>
+<% end %>
+</pre>
+

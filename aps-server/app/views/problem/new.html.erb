@@ -1,0 +1,21 @@
+<h1>create new problem</h1>
+
+<% form_for :problem, :url => { :action => 'create'} do |f| %>
+  <p>
+    <%= f.label :title, "Title" %><br/>
+    <%= f.text_field 'title' %>
+  </p>
+  <p>
+    <%= f.label :description, "Description" %><br/>
+    <%= f.text_area 'description' %>
+  </p>
+  <p>
+    <%= f.label :verifier, "Verifier" %><br/>
+    <%= f.text_area 'verifier' %>
+  </p>
+  <p>
+    <%= f.label :assumption, "Assumption" %><br/>
+    <%= f.text_area 'assumption' %>
+  </p>
+  <%= submit_tag %>
+<% end %> 

@@ -1,0 +1,7 @@
+<h2>All problems</h2>
+<ol>
+<% @problems.each do |pr| %>
+  <li><%= link_to h(pr.title), :action => "view", :id => pr %></li>
+<% end %>
+</ol>
+
