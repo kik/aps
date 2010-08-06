@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+req_def=''
+if [ -f Definitions.v ]; then
+  coqc Definitions.v
+  req_def='-require Definitions'
+fi
+
+coqc Theorem.v
+coqc Verify.v $req_def -require Theorem
+coqchk -o -norec Verify
+
+echo success
+
+rm -f *.glob *.vo

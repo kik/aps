@@ -4,7 +4,7 @@ class CreateProblems < ActiveRecord::Migration
       t.text :title
       t.text :options
       t.text :description
-      t.text :definition
+      t.text :definitions
       t.text :theorem
       t.text :verifier
       t.text :assumption

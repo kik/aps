@@ -8,14 +8,43 @@ Language: <%= f.select 'language_id', Language.all.map {|x| [x.name, x.id]} %><b
 <%= f.hidden_field 'problem_id' %>
 <%= submit_tag 'submit' %><br/>
 <% end %>
-<h2>Problem</h2>
+<h2>Description</h2>
 <p>
-<% @problem.description.each do |line| %>
-<%=h line %><br/>
-<% end %>
+<% @problem.description.each do |line| %><%=h line %><br/><% end %>
 </p>
-<h2>Options</h2> 
-<h2>Verifier</h2> 
+
+<% unless @problem.definitions.blank? %>
+<h2>Definitions</h2>
+<pre><%=h @problem.definitions %></pre>
+<% end %>
+
+<% unless @problem.theorem.blank? %>
+<h2>Theorem</h2>
+<pre><%=h @problem.theorem %></pre>
+<% end %>
+
+<% unless @problem.verifier.blank? %>
+<h2>Verifier</h2>
 <pre><%=h @problem.verifier %></pre>
+<% end %>
+
+<% unless @problem.assumption.blank? %>
 <h2>Assumption</h2>
 <pre><%=h @problem.assumption %></pre>
+<% end %>
+
+<h2>Ranking</h2>
+<% Language.all.each do |lang| %>
+<h3><%=h lang.name %></h3>
+<table border="1">
+<tr><th>Rank</th><th>User</th><th>Size</th><th>Date</th></tr>
+<% @answers.select{|x|x.language_id == lang.id}.sort_by{|x|[x.size, x.updated_at]}.each_with_index do |ans, i| %>
+<tr>
+<td><%=h i+1 %></td>
+<td><%= link_to h(ans.user), :action => "viewa", :id => ans.id %></td>
+<td><%=h ans.size %></td>
+<td><%=h ans.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+</tr>
+<% end %>
+</table>
+<% end %>

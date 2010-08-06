@@ -12,7 +12,13 @@ class ProblemController < ApplicationController
     @problem = Problem.find(params[:id])
     @answer = Answer.new
     @answer.problem_id = @problem.id
+    @answers = Answer.find_all_by_problem_id(@problem.id)
     @title = @problem.title
+  end
+
+  def viewa
+    @answer = Answer.find(params[:id])
+    @problem = Problem.find(@answer.problem_id)
   end
   
   def new
@@ -26,10 +32,27 @@ class ProblemController < ApplicationController
     redirect_to :action => :index
   end
 
+  private
+  def write_file(name, dat)
+    open(name, "w") {|io|
+      io.write dat
+    }
+  end
+
+  def execute(dirname, cmd)
+    ret = system("cd #{dirname}; #{cmd} >t.out 2>t.err")
+    out = File.read(dirname + "/t.out") rescue ""
+    err = File.read(dirname + "/t.err") rescue ""
+    [ret, out, err]
+  end
+  
+  public
+
   def prove
     @title = "Result"
     @problem = Problem.find_by_id(params[:answer][:problem_id])
     @answer = Answer.new(params[:answer])
+    @answer.size = @answer.file.size
     @success = false
     Dir.mkdir("/tmp/aps") rescue nil
     dirname = nil
@@ -43,23 +66,26 @@ class ProblemController < ApplicationController
         end
       }
       logger.info "DIR: #{dirname}"
-      open(dirname + "/Input.v", "w") {|io|
-        io.write @answer.file
-      }
-      ret = system("cd #{dirname}; coqc Input.v >coqc.out 2>coqc.err")
-      @coqc_out = File.read(dirname + "/coqc.out") rescue ""
-      @coqc_err = File.read(dirname + "/coqc.err") rescue ""
+      have_def = !@problem.definitions.blank?
+      write_file(dirname+"/Definitions.v", @problem.definitions) if have_def
+      write_file(dirname+"/Input.v", @answer.file)
+      write_file(dirname+"/Verify.v", @problem.verifier)
+
+      if have_def
+        ret, @coqd_out, @coqd_err = execute(dirname, "coqc Definitions.v")
+        raise "FAIL: coqc Definitions.v" unless ret
+      end
+
+      ret, @coqc_out, @coqc_err = execute(dirname, "coqc Input.v")
       raise "FAIL: coqc Input.v" unless ret
-      open(dirname + "/Verify.v", "w") {|io|
-        io.write @problem.verifier
-      }
-      ret = system("cd #{dirname}; coqc Verify.v -require Input >coqcv.out 2>coqcv.err")
-      @coqcv_out = File.read(dirname + "/coqcv.out") rescue ""
-      @coqcv_err = File.read(dirname + "/coqcv.err") rescue ""
-      raise "FAIL: coqc Verify.v -require Input" unless ret
-      ret = system("cd #{dirname}; coqchk -o -norec Input >coqchk.out 2>coqchk.err")
-      @coqchk_out = File.read(dirname + "/coqchk.out") rescue ""
-      @coqchk_err = File.read(dirname + "/coqchk.err") rescue ""
+
+      req_def = ""
+      req_def = "-require Definitions" if have_def
+      cmd = "coqc Verify.v #{req_def} -require Input"
+      ret, @coqcv_out, @coqcv_err = execute(dirname, cmd)
+      raise "FAIL: #{cmd}" unless ret
+
+      ret, @coqchk_out, @coqchk_err = execute(dirname, "coqchk -o -norec Input")
       raise "FAIL: coqchk -o -norec Input" unless ret
       raise "FAIL: module check" unless @coqchk_out =~ /^Modules were successfully checked$/
       raise "FAIL: module check" unless @coqchk_out =~ /^CONTEXT SUMMARY$/
@@ -79,6 +105,16 @@ class ProblemController < ApplicationController
       @error_message = $!.to_s
     ensure
       system("rm -rf #{dirname}") if dirname
+    end
+    if @success
+      @prev_answer = Answer.find_by_problem_id(@problem.id, :conditions => ["language_id = ? AND user = ?", @answer.language_id, @answer.user])
+      if @prev_answer
+        @prev_answer.file = @answer.file
+        @prev_answer.size = @answer.size
+        @prev_answer.save!
+      else
+        @answer.save!
+      end
     end
   end
 end

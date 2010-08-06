@@ -1,0 +1,64 @@
+<h1>Result: <%= @success ? "succeed" : "fail" %></h1>
+<% if @error_message %>
+  <pre><%=h @error_message %></pre>
+<% end %>
+
+<% unless @problem.definitions.blank? %>
+<h2>coqc Definitions.v</h2>
+<pre><%=h @problem.definitions %></pre>
+<% unless @coqd_out.blank? %>
+<h3>Output</h3>
+<pre><%=h @coqd_out %></pre>
+<% end %>
+<% unless @coqd_err.blank? %>
+<h3>Error</h3>
+<pre><%=h @coqd_err %></pre>
+<% end %>
+<% if @coqd_out.blank? && @coqd_err.blank? %>
+No output.
+<% end %>
+<% end %>
+
+<h2>coqc Input.v</h2> 
+<pre><%=h @answer.file %></pre>
+
+<% unless @coqc_out.blank? %>
+<h3>Output</h3>
+<pre><%=h @coqc_out %></pre>
+<% end %>
+<% unless @coqc_err.blank? %>
+<h3>Error</h3>
+<pre><%=h @coqc_err %></pre>
+<% end %>
+<% if @coqc_out.blank? && @coqc_err.blank? %>
+No output.
+<% end %>
+
+<h2>Verify</h2>
+
+<% unless @coqcv_out.blank? %>
+<h3>Output</h3>
+<pre><%=h @coqcv_out %></pre>
+<% end %>
+<% unless @coqcv_err.blank? %>
+<h3>Error</h3>
+<pre><%=h @coqcv_err %></pre>
+<% end %>
+<% if @coqcv_out.blank? && @coqcv_err.blank? %>
+No output.
+<% end %>
+
+<h2>Coqchk</h2>
+
+<% unless @coqchk_out.blank? %>
+<h3>Output</h3>
+<pre><%=h @coqchk_out %></pre>
+<% end %>
+<% unless @coqchk_err.blank? %>
+<h3>Error</h3>
+<pre><%=h @coqchk_err %></pre>
+<% end %>
+<% if @coqchk_out.blank? && @coqchk_err.blank? %>
+No output.
+<% end %>
+

@@ -10,11 +10,11 @@
     <%= f.text_area 'description' %>
   </p>
   <p>
-    <%= f.label :description, "Definition" %><br/>
-    <%= f.text_area 'definition' %>
+    <%= f.label :definitions, "Definitions (optional)" %><br/>
+    <%= f.text_area 'definitions' %>
   </p>
   <p>
-    <%= f.label :description, "Theorem" %><br/>
+    <%= f.label :theorem, "Theorem" %><br/>
     <%= f.text_area 'theorem' %>
   </p>
   <p>
@@ -22,7 +22,7 @@
     <%= f.text_area 'verifier' %>
   </p>
   <p>
-    <%= f.label :assumption, "Assumption" %><br/>
+    <%= f.label :assumption, "Assumption (optional)" %><br/>
     <%= f.text_area 'assumption' %>
   </p>
   <%= submit_tag %>

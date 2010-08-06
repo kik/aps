@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20100730220250) do
     t.text     "title"
     t.text     "options"
     t.text     "description"
+    t.text     "definitions"
     t.text     "theorem"
     t.text     "verifier"
     t.text     "assumption"
