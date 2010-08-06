@@ -2,8 +2,10 @@ class CreateProblems < ActiveRecord::Migration
   def self.up
     create_table :problems do |t|
       t.text :title
-      t.text :description
       t.text :options
+      t.text :description
+      t.text :definition
+      t.text :theorem
       t.text :verifier
       t.text :assumption
       t.timestamps

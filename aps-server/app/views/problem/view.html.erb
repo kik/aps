@@ -16,15 +16,6 @@ Language: <%= f.select 'language_id', Language.all.map {|x| [x.name, x.id]} %><b
 </p>
 <h2>Options</h2> 
 <h2>Verifier</h2> 
-<pre>
-<% @problem.verifier.each do |line| %>
-<%=h line %><br/>
-<% end %>
-</pre>
+<pre><%=h @problem.verifier %></pre>
 <h2>Assumption</h2>
-<pre>
-<% @problem.assumption.each do |line| %>
-<%=h line %><br/>
-<% end %>
-</pre>
-
+<pre><%=h @problem.assumption %></pre>

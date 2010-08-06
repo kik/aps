@@ -1,6 +1,6 @@
 <h1>create new problem</h1>
 
-<% form_for :problem, :url => { :action => 'create'} do |f| %>
+<% form_for :problem, :url => { :action => 'create' } do |f| %>
   <p>
     <%= f.label :title, "Title" %><br/>
     <%= f.text_field 'title' %>
@@ -8,6 +8,14 @@
   <p>
     <%= f.label :description, "Description" %><br/>
     <%= f.text_area 'description' %>
+  </p>
+  <p>
+    <%= f.label :description, "Definition" %><br/>
+    <%= f.text_area 'definition' %>
+  </p>
+  <p>
+    <%= f.label :description, "Theorem" %><br/>
+    <%= f.text_area 'theorem' %>
   </p>
   <p>
     <%= f.label :verifier, "Verifier" %><br/>
