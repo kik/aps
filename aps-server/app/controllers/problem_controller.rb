@@ -66,6 +66,10 @@ class ProblemController < ApplicationController
         end
       }
       logger.info "DIR: #{dirname}"
+
+      %w(Pwd Cd Drop ProtectedLoop Load Declare LoadPath Path ML State Debug Extract).each {|w|
+        raise "FAIL: forbidden word '#{w}'" if @answer.file[w]
+      }
       have_def = !@problem.definitions.blank?
       write_file(dirname+"/Definitions.v", @problem.definitions) if have_def
       write_file(dirname+"/Input.v", @answer.file)
