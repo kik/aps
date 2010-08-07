@@ -1,0 +1,12 @@
+<h1>recent entries</h1><table border="1">
+<tr><th>Problem</th><th>User</th><th>Lang</th><th>Size</th><th>Date</th></tr>
+<% @answers.each do |ans| %>
+<tr>
+<td><%= link_to h(ans.problem.title), :action => "view", :id => ans.problem.id %></td>
+<td><%=h ans.user %></td>
+<td><%=h ans.language.name %></td>
+<td><%=h ans.size %></td>
+<td><%=h ans.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+</tr>
+<% end %>
+</table>
