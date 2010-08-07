@@ -1,0 +1,4 @@
+Construct 'Seven trees isomorphism'.
+
+T and T7 are isomorphic, where T is the set of trees and
+T7 is the product of seven T's.

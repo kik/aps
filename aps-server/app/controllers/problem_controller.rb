@@ -32,6 +32,11 @@ class ProblemController < ApplicationController
     redirect_to :action => :index
   end
 
+  def recent
+    @titile = "recent entries"
+    @answers = Answer.find(:all, :order => "updated_at", :limit => 100, :include => [:problem, :language])
+  end
+
   private
   def write_file(name, dat)
     open(name, "w") {|io|

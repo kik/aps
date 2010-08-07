@@ -1,0 +1,7 @@
+Prove 'Induction by tree height'.
+
+Let P be a predicate about tree.
+It is sufficient to prove P x for all tree x, that
+(*) implies P x for all tree x.
+
+(*) forall y, height y < height x -> P y.
