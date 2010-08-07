@@ -34,7 +34,7 @@ class ProblemController < ApplicationController
 
   def recent
     @titile = "recent entries"
-    @answers = Answer.find(:all, :order => "updated_at", :limit => 100, :include => [:problem, :language])
+    @answers = Answer.find(:all, :order => "updated_at DESC", :limit => 100, :include => [:problem, :language])
   end
 
   private
