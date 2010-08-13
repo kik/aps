@@ -1,1 +1,1 @@
-Definition check_ICD_LPO: ICD -> LPO := ICD_LPO.
+Definition check_LPO_ICD: LPO -> ICD := LPO_ICD.

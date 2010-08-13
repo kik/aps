@@ -11,4 +11,43 @@ You can enjoy theorem proving here in several languages (one language).
 <br/>
 <%= link_to h("Recent entries"), :action => "recent" %>
 
+<h2>How to submit proofs.</h2>
+<p>
+Open problem page.  There are some code fragments (Definitions, Theorem and Verify).
+</p>
+
+<p>
+Some problem contains 'Definitions' part.  In this case, save as 'Definitions.v' and compile it.
+</p>
+<pre>
+$ coqc Definitions.v
+</pre>
+
+<p>
+Next, save 'Theorem' as 'Theorem.v'.  This part has theorems not proved yet.  Complete proof.
+</p>
+
+<p>
+Finally, if you have proved it, post your 'Theorem.v'.
+</p>
+
+<h2>How to create a new problem</h2>
+<p>
+First, feel free to create a new problem.  Any problem is welcomed.
+</p>
+
+<p>
+Download problem checker from <%= link_to h('here'), '/problem_checker.tgz' %>.
+</p>
+
+<p>
+Create files named 'Definitions.v', 'Theorem.v' and 'Verify.v'.  'Definitions.v' is optional.
+Please consult the problems already posted.
+</p>
+
+<p>
+Run checker program.  If 'success' is displayed, you can post it.
+If your problem requires some axioms, edit the checker output and copy it to 'Assumption' field.
+</p>
+
 <h2>News</h2>

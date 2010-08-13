@@ -1,4 +1,4 @@
 Require Import Definitions.
-Theorem LPO_ICD: LPO -> ICD.
+Theorem ICD_LPO: ICD -> LPO.
 Proof.
 Admitted.
