@@ -62,6 +62,7 @@ class ProblemController < ApplicationController
     Dir.mkdir("/tmp/aps") rescue nil
     dirname = nil
     begin
+      raise "FAIL: empty name" if @answer.user.blank?
       loop {
         dirname = "/tmp/aps/aps-#{rand(10000)}"
         begin
