@@ -9,7 +9,7 @@ if [ -f Definitions.v ]; then
 fi
 
 coqc Theorem.v
-coqc Verify.v $req_def -require Theorem
+coqc Verify.v -require Theorem $req_def
 coqchk -o -norec Verify
 
 echo success

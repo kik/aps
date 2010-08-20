@@ -91,7 +91,7 @@ class ProblemController < ApplicationController
 
       req_def = ""
       req_def = "-require Definitions" if have_def
-      cmd = "coqc Verify.v #{req_def} -require Input"
+      cmd = "coqc Verify.v -require Input #{req_def}"
       ret, @coqcv_out, @coqcv_err = execute(dirname, cmd)
       raise "FAIL: #{cmd}" unless ret
 
