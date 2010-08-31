@@ -29,6 +29,7 @@ class ProblemController < ApplicationController
   def create
     @problem = Problem.new(params[:problem])
     @problem.save!
+    Bot.update("New problem '#{@problem.title}': http://as305.dyndns.org/aps/problem/view/#{@problem.id}")
     redirect_to :action => :index
   end
 
@@ -118,13 +119,17 @@ class ProblemController < ApplicationController
     end
     if @success
       @prev_answer = Answer.find_by_problem_id(@problem.id, :conditions => ["language_id = ? AND user = ?", @answer.language_id, @answer.user])
+      id = nil
       if @prev_answer
         @prev_answer.file = @answer.file
         @prev_answer.size = @answer.size
         @prev_answer.save!
+        id = @prev_answer.id
       else
         @answer.save!
+        id = @answer.id
       end
+      Bot.update("#{@answer.user} submits proof of '#{@problem.title}': http://as305.dyndns.org/aps/problem/viewa/#{id}")
     end
   end
 end
