@@ -14,12 +14,12 @@ Language: <%= f.select 'language_id', Language.all.map {|x| [x.name, x.id]} %><b
 </p>
 
 <% unless @problem.definitions.blank? %>
-<h2>Definitions</h2>
+<h2>Definitions (<%= link_to 'download', :action => :d, :id => @problem.id %>)</h2>
 <pre><%=h @problem.definitions %></pre>
 <% end %>
 
 <% unless @problem.theorem.blank? %>
-<h2>Theorem</h2>
+<h2>Theorem (<%= link_to 'download', :action => :t, :id => @problem.id %>)</h2>
 <pre><%=h @problem.theorem %></pre>
 <% end %>
 

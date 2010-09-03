@@ -38,6 +38,16 @@ class ProblemController < ApplicationController
     @answers = Answer.find(:all, :order => "updated_at DESC", :limit => 100, :include => [:problem, :language])
   end
 
+  def d
+    @problem = Problem.find(params[:id])
+    send_data(@problem.definitions, :type => 'text/plain', :filename => 'Definitions.v')
+  end
+  
+  def t
+    @problem = Problem.find(params[:id])
+    send_data(@problem.theorem, :type => 'text/plain', :filename => 'Theorem.v')
+  end
+  
   private
   def write_file(name, dat)
     open(name, "w") {|io|
